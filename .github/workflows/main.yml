@@ -10,14 +10,14 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Publish Docker Image to GPR
-        uses: machine-learning-apps/gpr-docker-publish@master
+        uses: machine-learning-apps/gpr-docker-publish@v1.4
         id: docker
         with:
           IMAGE_NAME: 'builder'
           DOCKERFILE_PATH: 'Dockerfile'
           BUILD_CONTEXT: '/'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
 
       # This second step is illustrative and shows how to reference the 
       # output variables.  This is completely optional.
