@@ -6,26 +6,20 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-
-      - name: Publish Docker Image to GPR
-        uses: machine-learning-apps/gpr-docker-publish@v1.4
+      - uses: actions/checkout@master
+      - name: Publish to Registry
         id: docker
+        uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          IMAGE_NAME: 'builder'
-          TAG: 'master'
-          DOCKERFILE_PATH: 'context/Dockerfile'
-          BUILD_CONTEXT: 'context/'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          workdir: context
+          name: flowbrew/builder
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # This second step is illustrative and shows how to reference the 
-      # output variables.  This is completely optional.
       - name: Show outputs of previous step
         run: |
-          echo "The name:tag of the Docker Image is: $VAR1"
-          echo "The docker image is hosted at $VAR2"
+          echo "tag $VAR1"
+          echo "snapshot-tag $VAR2"
         env:
-          VAR1: ${{ steps.docker.outputs.IMAGE_SHA_NAME }}
-          VAR2: ${{ steps.docker.outputs.IMAGE_URL }}
+          VAR1: ${{ steps.docker.outputs.tag }}
+          VAR2: ${{ steps.docker.outputs.snapshot-tag }}
