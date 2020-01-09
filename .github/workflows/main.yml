@@ -3,7 +3,8 @@ name: CICD
 on: [push]
 
 jobs:
-  build-deploy:
+  publish:
+    needs: ['build-builder']
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
