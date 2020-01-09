@@ -13,5 +13,6 @@ jobs:
         with:
           workdir: context
           name: ntoss/builder
+          cache: true
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
